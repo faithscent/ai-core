@@ -29,18 +29,33 @@ class Hangman:
         if letter in self.word:
 
             self.list_letters.append(letter)
-            for i in range(len(self.word)):
+
+            for i in range(0,len(self.word)):
                 if letter == self.word[i]:
-                    self.word_guessed[i]==self.word[i]
+                    self.word_guessed[i] = self.word[i]
+
+            print(self.word_guessed)
+
+            if self.word_guessed != list(self.word):
+                self.ask_letter()
+            else:
+                print(f'congratulations you won!')
+                print(f'word is {self.word}')
 
 
         elif letter not in self.word:
             self.num_lives -= 1
             self.num_letter -= 1
             self.list_letters.append(letter)
-            print(self.list_letters)
-            print(self.num_lives)
-            self.ask_letter()
+
+            print('List of tried letters: ', self.list_letters)
+            print('number of lives: ', self.num_lives)
+            print(f'{letter} is not in the word')
+
+            if self.num_lives != 0:
+                self.ask_letter()
+            else:
+                print(f'You ran out of lives. The word was {self.word}')
 
 
     def ask_letter(self):
@@ -51,7 +66,7 @@ class Hangman:
         
         while check:
 
-            if len(letter) == 1: 
+            if len(letter) == 1 and letter.isalpha() == True: 
                 if letter not in self.list_letters:
                     self.check_letter(letter)
 
@@ -69,16 +84,7 @@ def play_game(word_list):
     game = Hangman(word_list, num_lives=5)
     game.ask_letter()
 
-    if game.word == game.word_guessed:
-        if game.num_lives == 0:
-             print("You have won")
-        else:
-             print(f'You ran out of lives. The word was{game.word}')
-        
  
 if __name__ == '__main__':
     word_list = ['apple', 'banana', 'orange', 'pear', 'strawberry', 'watermelon']
     play_game(word_list)
-# 
-
-
